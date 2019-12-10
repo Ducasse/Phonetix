@@ -26,9 +26,8 @@ Nysiis class >> language [
 { #category : #action }
 Nysiis >> encode: aPHWord [
 	| str firstChar buffer |
-	
 	str := self cleanString: aPHWord content.
-	(str size) > 0 
+	str size > 0 
 		ifTrue: [ 
 			str := str replaceFirstCharacters: {'MAC'.'KN'.'K'.'PH'.'PF'.'SCH'} 
 				withDictionary: {  'MAC'->'MCC'. 'KN'->'NN'.'K'->'C'.'PH'->'FF'.'PF'->'FF'.'SCH'->'SSS' } asDictionary. 
@@ -59,9 +58,9 @@ Nysiis >> encode: aPHWord [
 			str := buffer contents.
 			
 			str := str copyReplaceAll: 'AW' with: 'A'.
-			(str size > 0) ifTrue: [ (str last = $S) ifTrue: [ str := str allButLast  ] ].
-			(str size >= 2) ifTrue: [  str := str replaceString: 'AY' startAt: (str size - 1) with: 'Y' ].
-			(str size > 0) ifTrue: [ (str last = $A) ifTrue: [ str := str allButLast  ] ].
+			str size > 0 ifTrue: [ (str last = $S) ifTrue: [ str := str allButLast  ] ].
+			str size >= 2 ifTrue: [  str := str replaceString: 'AY' startAt: (str size - 1) with: 'Y' ].
+			str size > 0 ifTrue: [ (str last = $A) ifTrue: [ str := str allButLast  ] ].
 			str := firstChar , str removeDuplicateCharacters.	
 		].
 		^str cutAt: 6 paddingWith: Character space

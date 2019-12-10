@@ -71,7 +71,7 @@ PHDocument >> parse: aString [
 
 	"parse the text of the document and creates paragraphs"
 	
-	(aString subStrings: self delimiters) do: [ :each | self paragraphs add: (PHParagraph with: each engine: engine) ].
+	(aString substrings: self delimiters) do: [ :each | self paragraphs add: (PHParagraph with: each engine: engine) ].
 	^self
 ]
 

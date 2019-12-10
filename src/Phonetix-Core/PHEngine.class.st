@@ -131,7 +131,7 @@ PHEngine >> levenshteinDistanceOf: aWord With: anotherWord [
  	(aWord content size = 0) ifTrue: [ ^anotherWord content size ].
 	(anotherWord content size = 0) ifTrue: [ ^aWord content size ].
 	
-	stab := Matrix rows: (anotherWord content size + 1) columns: (aWord content size + 1).
+	stab := Array2D rows: (anotherWord content size + 1) columns: (aWord content size + 1).
 	1 to: stab columnCount  do: [ :i | stab at: 1 at: i put: (i - 1) ].
 	1 to: stab rowCount  do: [ :i | stab at: i at: 1 put: (i - 1) ].
 	

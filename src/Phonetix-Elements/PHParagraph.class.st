@@ -49,7 +49,7 @@ PHParagraph >> parse: aString [
 
 	"parse the text of the paragraph and creates sentences"
 	
-	(aString subStrings: self delimiters) do: [ :each | self sentences add: (PHSentence with: each engine: engine) ].
+	(aString substrings: self delimiters) do: [ :each | self sentences add: (PHSentence with: each engine: engine) ].
 	^self
 ]
 

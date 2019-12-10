@@ -58,7 +58,7 @@ PHSentence >> isInterrogative [
 PHSentence >> parse: aString [
 	"parse the text of the sentence and creates words"
 	
-	(aString subStrings: self delimiters) do: [ :each | self words add: (PHWord with: each engine: engine) ].
+	(aString substrings: self delimiters) do: [ :each | self words add: (PHWord with: each engine: engine) ].
 	^self
 	
 ]

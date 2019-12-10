@@ -23,7 +23,7 @@ Metaphone >> encode: aPHWord [
 	| str |
 	
 	str := self cleanString: aPHWord content.
-	(str size) > 0 
+	str size > 0 
 		ifTrue: [ ] 
 		ifFalse: [  ]
 
