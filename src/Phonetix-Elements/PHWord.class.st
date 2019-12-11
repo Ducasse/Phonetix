@@ -58,7 +58,7 @@ PHWord >> encodeWith: aSoundexAlgorithm [
 
 { #category : #accessing }
 PHWord >> from: aString [
-	word := aString
+	content := aString
 ]
 
 { #category : #action }
@@ -89,4 +89,10 @@ PHWord >> levenshteinDistanceWith: aWord [
 { #category : #action }
 PHWord >> soundex [
 	^engine soundex: self
+]
+
+{ #category : #accessing }
+PHWord >> word [ 
+
+	^ content
 ]
