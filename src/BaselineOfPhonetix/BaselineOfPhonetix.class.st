@@ -6,7 +6,7 @@ Class {
 
 { #category : #baselines }
 BaselineOfPhonetix >> baseline: spec [
-	<spec>
+	<baseline>
 
 	spec for: #'common' do: [
 		spec 
