@@ -34,22 +34,22 @@ PHParagraphTest >> syllabes [
 
 { #category : #tests }
 PHParagraphTest >> testNumberOfComplexWords [
-	self assert: (paragraph numberOfComplexWords = self complexWords)
+	self assert: paragraph numberOfComplexWords equals: self complexWords
 ]
 
 { #category : #tests }
 PHParagraphTest >> testNumberOfSentences [
-	self assert: (paragraph numberOfSentences = self sentences)
+	self assert: paragraph numberOfSentences equals: self sentences
 ]
 
 { #category : #tests }
 PHParagraphTest >> testNumberOfSyllabes [
-	self assert: (paragraph numberOfSyllabes = self syllabes)
+	self assert: paragraph numberOfSyllabes equals: self syllabes
 ]
 
 { #category : #tests }
 PHParagraphTest >> testNumberOfWords [
-	self assert: (paragraph numberOfWords = self words)
+	self assert: paragraph numberOfWords equals: self words
 ]
 
 { #category : #values }

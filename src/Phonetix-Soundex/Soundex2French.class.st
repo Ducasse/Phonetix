@@ -44,6 +44,7 @@ Soundex2French >> encode: aPHWord [
 
 { #category : #configuration }
 Soundex2French >> prefixTable [
+	self flag: #todo. "turn me in a class variable"
 	^{ 
 		'MAC'-> 'MCC' .
 		'ASA'->'AZA'.
@@ -56,6 +57,7 @@ Soundex2French >> prefixTable [
 
 { #category : #configuration }
 Soundex2French >> soundexTable [
+	self flag: #todo. "turn me in a class variable"
 	^{ 
 		'GUI'-> 'KI' . 
 		'GUE'->'KE'.

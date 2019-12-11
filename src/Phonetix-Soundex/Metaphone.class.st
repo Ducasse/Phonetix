@@ -21,8 +21,7 @@ Metaphone class >> language [
 { #category : #action }
 Metaphone >> encode: aPHWord [
 	| str |
-	
-	str := self cleanString: aPHWord content.
+	str := self cleanString: aPHWord word.
 	str size > 0 
 		ifTrue: [ ] 
 		ifFalse: [  ]

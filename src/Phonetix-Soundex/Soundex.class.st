@@ -24,27 +24,21 @@ Soundex class >> language [
 
 { #category : #action }
 Soundex >> encode: aPHWord [
-	"answer the soundex value of a word" 
+	"Answer the soundex value of a word" 
 	"onlyLetters translateToUppercase"
 	
 	| result  table str   |
-
-	str := self cleanString: aPHWord content.
-	
-	(str size > 0)
-		ifTrue: [ 
+	str := self cleanString: aPHWord word.
+	^ str isEmpty 
+		ifTrue: [ '0000']
+		ifFalse: [ 
 			result := WriteStream on: (String new).
 			table := self soundexTable.
-			
 			result nextPut: str first.
-			(str allButFirst) do: [  :each | 
-				table at: each ifPresent: [ : c | result nextPut: c ] 
-			].
-			
-			^(result contents removeDuplicateCharacters cutAt: 4 paddingWith: $0)
+			(str allButFirst) do: [ :each | 
+				table at: each ifPresent: [ : c | result nextPut: c ] ].
+			(result contents removeDuplicateCharacters cutAt: 4 paddingWith: $0)
 		]
-		ifFalse: [  ^'0000']
-		
 ]
 
 { #category : #configuration }

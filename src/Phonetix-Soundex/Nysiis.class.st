@@ -27,8 +27,7 @@ Nysiis class >> language [
 Nysiis >> encode: aPHWord [
 	| str firstChar buffer |
 	str := self cleanString: aPHWord content.
-	str size > 0 
-		ifTrue: [ 
+	str ifNotEmpty: [ 
 			str := str replaceFirstCharacters: {'MAC'.'KN'.'K'.'PH'.'PF'.'SCH'} 
 				withDictionary: {  'MAC'->'MCC'. 'KN'->'NN'.'K'->'C'.'PH'->'FF'.'PF'->'FF'.'SCH'->'SSS' } asDictionary. 
 			str := str replaceLastCharacters: { 'EE'.'IE'.'DT'.'RT'.'RD'.'NT'.'ND' }
@@ -45,7 +44,7 @@ Nysiis >> encode: aPHWord [
 			
 			"Si une lettre non voyelle précède ou suit un H, on ne conserve que la précédente"
 			buffer := WriteStream on: (String new).
-			1 to: (str size) do: [  :pos |
+			1 to: str size do: [  :pos |
 				| charBefore charAfter |
 				((str at: pos) = $H)
 					ifTrue: [

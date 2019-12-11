@@ -14,10 +14,10 @@ PHPhoneticAlgorithmsTest >> setUp [
 
 { #category : #tests }
 PHPhoneticAlgorithmsTest >> testAllIndexOf [
-	self assert: ('' allIndexOf: 'MCC') = #() asOrderedCollection.
-	self assert: ('MCC' allIndexOf: 'MCC') = #(1) asOrderedCollection.
-	self assert: ('AMCC' allIndexOf: 'MCC') = #(2) asOrderedCollection.
-	self assert: ('AMCCBMCC' allIndexOf: 'MCC') = #(2 6) asOrderedCollection.
+	self assert: ('' allIndexOf: 'MCC') equals: #() asOrderedCollection.
+	self assert: ('MCC' allIndexOf: 'MCC') equals: #(1) asOrderedCollection.
+	self assert: ('AMCC' allIndexOf: 'MCC') equals: #(2) asOrderedCollection.
+	self assert: ('AMCCBMCC' allIndexOf: 'MCC') equals: #(2 6) asOrderedCollection.
 	
 ]
 

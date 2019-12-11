@@ -29,24 +29,23 @@ Soundex2English >> encode: aPHWord [
 
 	str := self cleanString: aPHWord content.
 	
-	(str size > 0)
-		ifTrue: [ 
+	^ str isEmpty
+		ifTrue: [  '0000']
+		ifFalse: [ 
 			result := WriteStream on: (String new).
 			table := self soundexTable.
-			
 			result nextPut: str first.
-			(str allButFirst) do: [  :each | 
-				table at: each ifPresent: [ : c | result nextPut: c ] 
-			].
-			
-			^(result contents removeDuplicateCharacters cutAt: 4 paddingWith: $0)
+			str allButFirst do: [  :each | 
+				table at: each ifPresent: [ : c | result nextPut: c ] ].
+			(result contents removeDuplicateCharacters cutAt: 4 paddingWith: $0)
 		]
-		ifFalse: [  ^'0000']
+		
 		
 ]
 
 { #category : #configuration }
 Soundex2English >> soundex2Table [
+	self flag: #todo. "turn me in a class variable"
 	^{ $A-> '' . $B->$1 . $C->$3 . $D->$6 . $E->'' . $F->$2 . $G->$4 . $H->'' . $I->'' . $J->$4 .
 		$K->$3 . $L->$7 . $M->$8 . $N->$8 . $O->'' . $P->$1 . $Q->$5 . $R->$9 . $S->$3 . $T->$6 .
 	 	$U->'' . $V->$3 . $W->'' . $X-> $5 . $Y->'' . $Z->$5 } asDictionary
@@ -55,6 +54,7 @@ Soundex2English >> soundex2Table [
 
 { #category : #configuration }
 Soundex2English >> soundexTable [
+	self flag: #todo. "turn me in a class variable"
 	^{ $B->$1 . $C->$3 . $D->$6 . $F->$2 . $G->$4 . $J->$4 .
 		$K->$3 . $L->$7 . $M->$8 . $N->$8 . $P->$1 . $Q->$5 . $R->$9 . $S->$3 . $T->$6 .
 	  	$V->$3 . $X-> $5 . $Z->$5 } asDictionary

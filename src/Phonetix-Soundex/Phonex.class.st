@@ -27,13 +27,14 @@ Phonex class >> language [
 
 { #category : #action }
 Phonex >> encode: aPHWord [
+	"Return a phonex value of the argument."
+	
 	| str  result |
-	
-	str := self cleanString: aPHWord content.
+	str := self cleanString: aPHWord word.
 	result := 0.0.
-	
-	(str size) > 0 
-		ifTrue: [ 
+	^ str isEmpty
+		ifTrue: [ result ]  
+		ifFalse: [ 
 			str := str copyReplaceAll: 'Y' with: 'I'.
 			str := str remove: $H exceptIfAfter: #($C $S $P).
 			str := str replaceStringsWithDictionary: {  
@@ -59,9 +60,9 @@ Phonex >> encode: aPHWord [
 			str doWithIndex: [ :each :idx | 
 				result := result + ((values at: each) * (22 ** (idx negated))).
 			].				
-			^result round: 6
+			result round: 6
 		]
-		ifFalse: [ ^result ]
+		
 ]
 
 { #category : #'initialize-release' }
