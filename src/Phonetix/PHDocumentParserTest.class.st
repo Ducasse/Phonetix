@@ -67,23 +67,20 @@ PHDocumentParserTest >> testNextPosition [
 { #category : #tests }
 PHDocumentParserTest >> testNumberOfComplexWords [
 	| document |
-	
 	document := parser parse.
-	self assert: (document numberOfComplexWords = self complexWords)
+	self assert: document numberOfComplexWords equals: self complexWords
 ]
 
 { #category : #tests }
 PHDocumentParserTest >> testNumberOfSentences [
 	| document |
-	
 	document := parser parse.
-	self assert: (document numberOfSentences  = self sentences)
+	self assert: document numberOfSentences equals: self sentences
 ]
 
 { #category : #tests }
 PHDocumentParserTest >> testNumberOfSyllabes [
 	| document |
-	
 	document := parser parse.
 	self assert: (document numberOfSyllabes = self syllabes)
 ]

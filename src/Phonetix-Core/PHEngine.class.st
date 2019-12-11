@@ -11,12 +11,6 @@ Class {
 	#category : #'Phonetix-Core'
 }
 
-{ #category : #'help-text' }
-PHEngine class >> FrameworkManual [
-	<wikiStyleHelp: #'Phonetix'>
-	^ self comment
-]
-
 { #category : #registration }
 PHEngine class >> language [
 	self subclassResponsibility 
@@ -27,12 +21,9 @@ PHEngine class >> phoneticEnginesAvailable [
 	"answer the list of the phonetic engines"
 	
 	| engines |
-	
 	engines := self allSubclasses.
-	(engines isEmpty) ifTrue: [
-		^{  self } reject: [  :engine | engine = PHEngine ]
-	].
-	
+	engines isEmpty ifTrue: [
+		^{ self } reject: [  :engine | engine = PHEngine ] ].
 	^engines
 ]
 
@@ -45,7 +36,10 @@ PHEngine >> encode: aPHWord with: aSoundexAlgorithm [
 PHEngine >> fleshIndicator: aDocument [ 
 	"calculate the flesh indicator of a document"
 	
-	^self fleshIndicatorWords:  (aDocument numberOfWords) sentences:  (aDocument numberOfSentences) syllabes: (aDocument numberOfSyllabes) 
+	^self 
+		fleshIndicatorWords: aDocument numberOfWords 
+		sentences: aDocument numberOfSentences 
+		syllabes: aDocument numberOfSyllabes
 	
 
 ]
@@ -55,10 +49,8 @@ PHEngine >> fleshIndicatorWords: words sentences: sentences syllabes: syllabes [
 	"calculate the flesh indicator from the number of words, the number of sentences and the number of syllabes"
 	
 	| averageWordsPerSentence averageSyllabesPerWord |	
-		
 	averageWordsPerSentence := words / sentences.
 	averageSyllabesPerWord := syllabes / words.
-	
 	"format with 3 decimal places"
 	 ^ (206.835 - (1.015 * averageWordsPerSentence) - (84.6 * averageSyllabesPerWord)) roundDownTo: 0.001.
 
@@ -68,7 +60,10 @@ PHEngine >> fleshIndicatorWords: words sentences: sentences syllabes: syllabes [
 PHEngine >> gunningFogIndicator: aDocument [
 	"calculate the gunning-fog indicator of a document"
 	
-	^self gunningFogIndicatorWords: (aDocument numberOfWords) complexWords: (aDocument numberOfComplexWords) sentences: (aDocument numberOfSentences)
+	^ self 
+		gunningFogIndicatorWords: aDocument numberOfWords 
+		complexWords: aDocument numberOfComplexWords 
+		sentences: aDocument numberOfSentences
 ]
 
 { #category : #private }
@@ -76,37 +71,34 @@ PHEngine >> gunningFogIndicatorWords: words complexWords: complexWords sentences
 	"calculate the gunning-fog indicator from the number of words, the number of complex words and the number of sentences"
 	
 	| averageWordsPerSentence proportionOfComplexWords |
-	
 	averageWordsPerSentence :=  words / sentences.
 	proportionOfComplexWords := complexWords / words.
-	
 	^(0.4 * (averageWordsPerSentence + (100 * proportionOfComplexWords))) roundDownTo: 0.001
 ]
 
 { #category : #distance }
 PHEngine >> hammingDistanceOf: aWord with: anotherWord [
 	
-	| distance lenmax |
-		
-	"length of the more long string"
-	lenmax := ({ aWord content size . anotherWord content size } asSortedCollection: [ :a :b | a > b ]) first.
-	
-	"calcul of the distance"
+	| distance |
 	distance := 0.
-	1 to: lenmax do: [ :pos | ((aWord content at: pos) ~=  (anotherWord content at: pos)) ifTrue: [ distance := distance + 1 ] ].
-	^distance
+	1 
+		to: (aWord content size max: anotherWord content size)
+		do: [ :pos | 
+				((aWord content at: pos) ~= (anotherWord content at: pos)) 
+					ifTrue: [ distance := distance + 1 ] ].
+	^ distance
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 PHEngine >> initialize [
 	super initialize.
-	
 	phoneticAlgorithms := Dictionary new.
 
 	"the engine is registering all the soundex algorithms with the same language"
-	(PhoneticAlgoritms allSubclasses) do: [ :algo | 			
-		(algo language = self class language) ifTrue: [ 
-			phoneticAlgorithms at: (algo algorithm) put: (algo new)
+	self flag: #todo. "should be done at the class level"
+	PhoneticAlgoritms allSubclasses do: [ :algo | 			
+		algo language = self class language ifTrue: [ 
+			phoneticAlgorithms at: algo algorithm put: algo new
 		]
 	]
 	
@@ -128,8 +120,8 @@ PHEngine >> levenshteinDistanceOf: aWord With: anotherWord [
 	| stab cost |
 	
 	"if a string is empty, answer the length of the another string"
- 	(aWord content size = 0) ifTrue: [ ^anotherWord content size ].
-	(anotherWord content size = 0) ifTrue: [ ^aWord content size ].
+ 	aWord content isEmpty ifTrue: [ ^ anotherWord content size ].
+	anotherWord content isEmpty ifTrue: [ ^ aWord content size ].
 	
 	stab := Array2D rows: (anotherWord content size + 1) columns: (aWord content size + 1).
 	1 to: stab columnCount  do: [ :i | stab at: 1 at: i put: (i - 1) ].
@@ -137,7 +129,9 @@ PHEngine >> levenshteinDistanceOf: aWord With: anotherWord [
 	
 	2 to: stab columnCount do: [ :i |
 		2 to: stab rowCount do: [ :j |
-				((aWord content at: i - 1) = (anotherWord content at: j - 1)) ifTrue: [ cost := 0 ] ifFalse: [ cost := 1].
+				((aWord content at: i - 1) = (anotherWord content at: j - 1)) 
+						ifTrue: [ cost := 0 ] 
+						ifFalse: [ cost := 1].
 				stab at: j at: i put: ({ (stab at: j at: (i - 1)) + 1 . (stab at: (j - 1) at: i) + 1 . ((stab at: (j - 1) at: (i - 1)) + cost) } asSortedCollection: [ :a :b | a < b ]) first. ] ].
 	^stab at: stab rowCount at: stab columnCount
 ]
