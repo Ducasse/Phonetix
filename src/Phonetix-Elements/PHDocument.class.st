@@ -5,7 +5,8 @@ Class {
 	#name : #PHDocument,
 	#superclass : #PHElementType,
 	#instVars : [
-		'paragraphs'
+		'paragraphs',
+		'sentences'
 	],
 	#category : #'Phonetix-Elements'
 }
@@ -68,16 +69,16 @@ PHDocument >> paragraphs: anObject [
 
 { #category : #private }
 PHDocument >> parse: aString [
-
 	"parse the text of the document and creates paragraphs"
 	
-	(aString substrings: self delimiters) do: [ :each | self paragraphs add: (PHParagraph with: each engine: engine) ].
-	^self
+	(aString substrings: self delimiters) 
+		do: [ :each | self paragraphs add: (PHParagraph with: each engine: engine) ].
+	^ self
 ]
 
 { #category : #accessing }
 PHDocument >> sentences [
-	^ sentences
+	^ sentences 
 ]
 
 { #category : #accessing }

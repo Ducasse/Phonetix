@@ -82,15 +82,15 @@ PHDocumentParserTest >> testNumberOfSentences [
 PHDocumentParserTest >> testNumberOfSyllabes [
 	| document |
 	document := parser parse.
-	self assert: (document numberOfSyllabes = self syllabes)
+	self assert: document numberOfSyllabes equals: self syllabes
 ]
 
 { #category : #tests }
 PHDocumentParserTest >> testNumberOfWords [
+
 	| document |
-	
 	document := parser parse.
-	self assert: (document numberOfWords = self words)
+	self assert: document numberOfWords equals: self words
 ]
 
 { #category : #values }

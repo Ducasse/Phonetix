@@ -79,6 +79,7 @@ PHElementType >> numberOfComplexWords [
 
 { #category : #action }
 PHElementType >> numberOfSentences [
+	self halt.
 	^engine numberOfSentencesInto: self
 ]
 
